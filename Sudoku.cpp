@@ -4,9 +4,8 @@
 
 #include "Sudoku.h"
 
-#include <utility>
 #include <iostream>
-#include <tuple>
+#include <chrono>
 
 Sudoku::Sudoku(std::vector<std::vector<int>> grid) {
     this->grid = std::move(grid);
@@ -55,11 +54,6 @@ void Sudoku::set_input_mask() {
         input_mask.emplace_back(0);
         for(int j=0; j<9; j++) {
             input_mask[i][j] = grid[i][j] == 0;
-            if(grid[i][j] == 0) {
-                struct point p;
-                p = { i, j };
-                input_points.push_back(p);
-            }
         }
     }
 }
@@ -74,7 +68,6 @@ void Sudoku::print() {
                 std::cout << '_';
             }
             std::cout << ' ';
-            //std::cout << grid[i][j] << ' ';
 
             if(!((j+1)%3))
                 std::cout << " ";
@@ -116,10 +109,6 @@ bool Sudoku::check_position(int x, int y, int k) {
     int temp_col = y/3;
     int sqr_pos = temp_row*3 + temp_col;
 
-    //if(debug) std::cout << "\trow: " << row_bitsets[x] << std::endl;
-    //if(debug) std::cout << "\tcol: " << col_bitsets[y] << std::endl;
-    //if(debug) std::cout << "\tsqr: " << sqr_bitsets[sqr_pos] << std::endl;
-
     if(row_bitsets[x][n]) {
         if(debug) std::cout << "\t" << k << " already in row " << x << std::endl;
         return false;
@@ -139,31 +128,32 @@ bool Sudoku::check_position(int x, int y, int k) {
 
 void Sudoku::solve() {
     std::cout << "starting to solve sudoku..." << std::endl;
+    auto start = std::chrono::high_resolution_clock::now();
     solve_rec();
-    std::cout << "finished solving sudoku in " << iterations << " iterations..." << std::endl;
+    auto finish = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = finish - start;
+    std::cout << "finished solving sudoku in " << iterations << " iterations (" << elapsed.count() << "s)" << std::endl;
 }
 
-point Sudoku::first_empty() {
-    for(int i=0; i<9; i++) {
-        for(int j=0; j<9; j++) {
-            if(grid[i][j] == 0) {
-                return point {i, j};
-            }
-        }
-    }
-    return point {-1, -1};
-}
 
 bool Sudoku::solve_rec() {
     iterations++;
 
-    point p = first_empty();
-    if(p.x == -1 && p.y == -1) {
+    int x = -1;
+    int y = -1;
+
+    for(int i=0; i<9; i++) {
+        for(int j=0; j<9; j++) {
+            if(grid[i][j]==0) {
+                x = i;
+                y = j;
+                break;
+            }
+        }
+    }
+    if(x == -1 && y == -1) {
         return true;
     }
-
-    int x = p.x;
-    int y = p.y;
 
     for(int k=1; k<=9; k++) {
         if(check_position(x, y, k)) {

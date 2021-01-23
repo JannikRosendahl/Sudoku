@@ -9,10 +9,6 @@
 #include <vector>
 #include <bitset>
 
-typedef struct point {
-    int x, y;
-} point;
-
 
 class Sudoku {
 
@@ -30,13 +26,11 @@ private:
 
     std::vector<std::bitset<9>> input_mask;
 
-    std::vector<point> input_points;
 
     void set_bitsets();
     void set_input_mask();
     bool solve_rec();
     bool check_position(int x, int y, int k);
-    point first_empty();
 
 public:
     explicit Sudoku(std::vector<std::vector<int>>);

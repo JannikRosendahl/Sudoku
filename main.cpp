@@ -81,6 +81,7 @@ int main(int argc, char** argv) {
         {0, 0, 0, 0, 4, 0, 0, 0, 9, },
     };
 
+    /*
     Sudoku sudoku_1 = Sudoku(grid_1);
     sudoku_1.print();
     cout << "sudoku.check() = " << (sudoku_1.check() ? "true" : "false") << endl << endl;
@@ -95,7 +96,7 @@ int main(int argc, char** argv) {
     sudoku_2.solve();
     sudoku_2.print();
     cout << "sudoku.check() = " << (sudoku_2.check() ? "true" : "false") << endl << endl;
-    
+    */
 
     Sudoku sudoku_3 = Sudoku(grid_3);
     sudoku_3.print();
@@ -104,6 +105,7 @@ int main(int argc, char** argv) {
     sudoku_3.print();
     cout << "sudoku.check() = " << (sudoku_3.check() ? "true" : "false") << endl << endl;
 
+
     Sudoku sudoku_4 = Sudoku(grid_4);
     sudoku_4.print();
     cout << "sudoku.check() = " << (sudoku_4.check() ? "true" : "false") << endl << endl;
@@ -111,13 +113,14 @@ int main(int argc, char** argv) {
     sudoku_4.print();
     cout << "sudoku.check() = " << (sudoku_4.check() ? "true" : "false") << endl << endl;
 
+    /*
     Sudoku sudoku_5 = Sudoku(grid_5);
     sudoku_5.print();
     cout << "sudoku.check() = " << (sudoku_5.check() ? "true" : "false") << endl << endl;
     sudoku_5.solve();
     sudoku_5.print();
     cout << "sudoku.check() = " << (sudoku_5.check() ? "true" : "false") << endl << endl;
-
+    */
 
     return 0;
 }
